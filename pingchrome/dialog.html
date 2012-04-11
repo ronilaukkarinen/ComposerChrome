@@ -1,0 +1,94 @@
+<!doctype html> 
+<html> 
+<head>
+
+<link rel="stylesheet" href="main.css"> 
+<script src="jquery-1.5.1.min.js"></script>
+
+<script type="text/javascript">
+var pt = '';
+
+$(document).ready(function(){
+    $("#message").focus();
+    chrome.tabs.getSelected(null, function(tab){ 
+        if( tab.url.indexOf('chrome://') < 0 )
+        {
+		
+            var url = tab.url;
+			var title = tab.title;
+        
+            $("#message").val([title+" "+url]);
+        }
+    });
+    
+    $.get('http://ping.fm/dashboard/', function(data){
+        var inputtag = data.match(/<input[^>]*id="pt"[^>]*value="([^"]*)" \/>/);
+        
+        $("#loading").hide();
+        if( inputtag != null ) {
+            pt = data.match(/<input[^>]*id="pt"[^>]*value="([^"]*)" \/>/)[1];
+            $("#loggedin").fadeIn();
+            $("#message").select();
+        } else {
+            $("#loggedout").fadeIn();
+        
+        }
+    });
+
+    $("#submitter").click(function(){     
+        $("#submitter").attr("disabled","disabled");
+    
+        $.post('http://ping.fm/post/',
+            { service: '',
+              title: '',
+              message: $('#message').val(),
+              pt: pt
+            }, function(){ window.close(); });
+    });
+    
+    function countMessage() {
+        var msg = $("#message").val();
+        if( msg.length == 1 )
+            $("#charcount").text(msg.length+" character");
+        else
+            $("#charcount").text(msg.length+" characters");
+            
+        if( msg.length > 140 )
+            $("#charcount").addClass("warning");
+        else
+            $("#charcount").removeClass("warning");
+    }
+    countMessage();
+    
+    var countTimer = null;
+    
+    $("#message").keydown(function(){
+        countTimer = setTimeout(countMessage,75);
+    }).keyup(function(){
+        clearTimeout(countTimer);
+    });
+});
+</script>
+
+</head>
+<body>
+
+    <div id="loading">
+        Loading...
+    </div>
+    
+    <div id="loggedout">
+        You must <a href="http://ping.fm/login/" target="_blank">log in to Ping.fm</a> to post.
+    </div>
+    
+    <div id="loggedin">
+    
+        <p id="charcount">0 characters</p>
+        <p>Type your message below:</p>
+        <textarea id="message" name="message"></textarea><br>
+        <input id="submitter" type="submit" value="Send Ping">
+
+    </div>
+
+</body>
+</html>
