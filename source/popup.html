@@ -1,0 +1,32 @@
+<!doctype html> 
+<html> 
+<head>
+
+<link rel="stylesheet" href="composer.css"> 
+<script src="jquery-1.5.1.min.js"></script>
+<script src="popup.js"></script>
+
+</script>
+
+</head>
+<body>
+
+    <div id="loading">
+        Loading...
+    </div>
+    
+    <div id="loggedout">
+        You must <a href="http://composer.io/users/login/" target="_blank">log in to composer.io</a> to post.
+    </div>
+    
+    <div id="loggedin">
+    
+        <p id="charcount">0 characters</p>
+        <p>Write once, publish everywhere:</p>
+        <textarea id="message" name="message"></textarea><br />
+        <input id="composer" type="submit" value="Compose">
+
+    </div>
+
+</body>
+</html>
