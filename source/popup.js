@@ -34,7 +34,7 @@ $(document).ready(function(){
 
             {
               'data[Post][body]': $('#message').val(),
-              'data[Post][services]': '',
+              'data[Post][services]': 'default',
               postbody: postbody
             }, function(){ window.close(); 
             });
