@@ -7,3 +7,5 @@ Rest in peace Ping.fm, Welcome Composer.io!
 --------------
 
 Originally a ping.fm extension for Google Chrome, but in spring 2013 developers who missed ping.fm invented composer.io.
+
+Official download: https://chrome.google.com/webstore/detail/composerchrome/lfcnaogicahildkdpigbigjmlhnnjcke
